@@ -65,7 +65,7 @@ const generateCardNumber = (input) => {
         accNum = Math.random().toString().slice(2, 11)
         accountNumber =  BIN_Digits.split('').slice(0).concat(accNum.split(''));
 
-        return accountNumber
+        return {accountNumber, creditCardDetails}
     } catch (e) {
         return e.message
     }
@@ -74,7 +74,8 @@ const generateCardNumber = (input) => {
 // generateCardNumber(brand)
 const fetchCC = (input) => {
     try {
-        let cardNumberArray = generateCardNumber(input);
+        let cardDetails = generateCardNumber(input);
+        let cardNumberArray = cardDetails.accountNumber;
         let cardNumber = null;
         
         if (typeof cardNumberArray == 'object') {
@@ -82,7 +83,7 @@ const fetchCC = (input) => {
         } else {
             throw new Error(cardNumberArray)
         }
-
+        
         for (let i = cardNumberArray.length - 1; i >= 0; i-=2) {
             cardNumberArray[i] *= 2
             if (cardNumberArray[i] > 9) {
@@ -101,7 +102,7 @@ const fetchCC = (input) => {
         if (checkSum % 10 !== 0) {
             checkDigit = (checkSum*9) % 10;
         }
-        return {"card_number": cardNumber+checkDigit, }
+        return {"card_number": cardNumber+checkDigit, "brand": cardDetails.creditCardDetails.BRAND, "type": cardDetails.creditCardDetails.CARD_TYPE, "country": cardDetails.creditCardDetails.COUNTRY}
     } catch (e) {
         return e.message
     }
