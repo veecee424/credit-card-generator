@@ -1,6 +1,6 @@
 {
-  "name": "generaterandomcards",
-  "version": "1.0.0",
+  "name": "getrandomcards",
+  "version": "1.0.1",
   "description": "A package which generates valid credit cards",
   "main": "app.js",
   "scripts": {
