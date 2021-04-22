@@ -60,6 +60,10 @@ const generateCardNumber = (input) => {
         if (creditCardDetails.BRAND == 'verve'.toUpperCase()) {
             accNum = Math.random().toString().slice(2, 14)
         }
+
+        if (creditCardDetails.BRAND == 'american express'.toUpperCase()) {
+            accNum = Math.random().toString().slice(2, 10)
+        }
         
         BIN_Digits = creditCardDetails.BIN.toString()
         accNum = Math.random().toString().slice(2, 11)
