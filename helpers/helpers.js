@@ -108,7 +108,7 @@ const fetchCC = (input) => {
         }
         return {"card_number": cardNumber+checkDigit, "brand": cardDetails.creditCardDetails.BRAND, "type": cardDetails.creditCardDetails.CARD_TYPE, "country": cardDetails.creditCardDetails.COUNTRY}
     } catch (e) {
-        return e.message
+        return {"status": "error", "message": "e.message"}
     }
 }
 
