@@ -101,7 +101,7 @@ const fetchCC = (input) => {
         if (checkSum % 10 !== 0) {
             checkDigit = (checkSum*9) % 10;
         }
-        return cardNumber+checkDigit
+        return {"card_number": cardNumber+checkDigit, }
     } catch (e) {
         return e.message
     }
