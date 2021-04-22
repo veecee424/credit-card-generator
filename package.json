@@ -1,5 +1,5 @@
 {
-  "name": "creditcardgenerator",
+  "name": "dveedceecardgenerator",
   "version": "1.0.0",
   "description": "A package which generates valid credit cards",
   "main": "app.js",
