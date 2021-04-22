@@ -1,6 +1,7 @@
 const db = require('../bin.db')
 
-const cardBrandAndType = (brand, type)=> {
+
+const cardDetails = (brand, type, country)=> {
     let card = null;
     let cardArr = []
     let numOfCardsFetched = null;
@@ -11,13 +12,30 @@ const cardBrandAndType = (brand, type)=> {
                 cardArr.push(item)
             }
         }   
-    } else if(brand && type) {
+    } 
+    
+    if(brand && type && !country) {
+        cardArr = []
         for (let item of db) {
-            if (item.BRAND == brand.toUpperCase() && item.CARD_TYPE == type.toUpperCase()) {
+            if (item.BRAND == brand.toUpperCase() && item.CARD_TYPE == type.toUpperCase() ) {
                 cardArr.push(item)
             }
         }
     } 
+    // console.log(cardArr.length)
+    if(brand && type && country) {
+        cardArr = []
+        for (let item of db) {
+            if (item.BRAND == brand.toUpperCase() && item.CARD_TYPE == type.toUpperCase() && item.COUNTRY.toUpperCase() == country.toUpperCase()) { 
+                cardArr.push(item)
+            }
+        }
+    }
+
+    if (!cardArr.length) {
+        throw new Error('Card not found - invalid brand, type, or country.')
+    }
+
     //Randomly loop through card array and use one
     numOfCardsFetched = cardArr.length;
     card = cardArr[Math.floor(Math.random() * numOfCardsFetched)]
@@ -25,26 +43,31 @@ const cardBrandAndType = (brand, type)=> {
 }
 
 
+
 //Fetch card according to brand
-const generateCardNumber = (brand, type) => {
+const generateCardNumber = (brand, type, country) => {
     try {
         let dbLength = db.length;
         let creditCardDetails = db[Math.floor(Math.random()*dbLength)];
         let BIN_Digits = null;
         let accNum = null;
         let accountNumber = null;
-        
-        if (brand && cardBrandAndType(brand, type)) {
-            creditCardDetails = cardBrandAndType(brand, type)
+
+        if (brand && cardDetails(brand, type, country)) {
+            creditCardDetails = cardDetails(brand, type, country)
         } 
 
-        if (brand && !cardBrandAndType(brand)) {
-            throw new Error('Invalid card brand')
-        }
+        // if (brand && !cardDetails(brand)) {
+        //     throw new Error('Invalid card brand')
+        // }
 
-        if (brand && type && !cardBrandAndType(brand, type)) {
-            throw new Error('invalid card brand or type')
-        }
+        // if (brand && type && !cardDetails(brand, type)) {
+        //     throw new Error('invalid card brand or type')
+        // }
+       
+        // if (country && !cardDetails(brand, type, country)) {
+        //     throw new Error('invalid card brand or type or country')
+        // }
     
         // Verve card check
         if (creditCardDetails.BRAND == 'verve'.toUpperCase()) {
@@ -62,15 +85,15 @@ const generateCardNumber = (brand, type) => {
 }
 
 // generateCardNumber(brand)
-const fetchCC = (brand, type) => {
+const fetchCC = (brand, type, country) => {
     try {
-        let cardNumberArray = generateCardNumber(brand, type);
+        let cardNumberArray = generateCardNumber(brand, type, country);
         let cardNumber = null;
-     
+        
         if (typeof(cardNumberArray) == 'object') {
             cardNumber = cardNumberArray.join('')
         } else {
-            throw new Error('Invalid card brand or type, could not generate card')
+            throw new Error(cardNumberArray)
         }
 
         for (let i = cardNumberArray.length - 1; i >= 0; i-=2) {
@@ -100,4 +123,4 @@ const fetchCC = (brand, type) => {
 // console.log(fetchCC('mastercard', ''))
 
 
-module.exports = {generateCardNumber, cardBrandAndType, fetchCC}
+module.exports = {generateCardNumber, cardDetails, fetchCC}

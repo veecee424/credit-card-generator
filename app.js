@@ -1,5 +1,4 @@
 const express = require('express')
-const db = require('./bin.db')
 const app = express()
 const {fetchCC} = require('./helpers/helpers')
 
@@ -10,15 +9,24 @@ generateValidCard.randomCard = ()=> {
     return fetchCC()
 } 
 
-generateValidCard.cardType = (brand)=> {
+generateValidCard.cardBrand = (brand)=> {
     return fetchCC(brand)
 }
 
-generateValidCard.cardBrandAndType = ()=> {
+generateValidCard.brandAndType = (brand, type)=> {
     return fetchCC(brand, type)
 }
 
-console.log(fetchCC('mastercard', 'credit'))
+generateValidCard.brandAndType = (brand, type)=> {
+    return fetchCC(brand, type)
+}
+
+generateValidCard.brandTypeAndCountry = (brand, type, country)=> {
+    return fetchCC(brand, type, country)
+}
+
+// console.log(fetchCC('mastercard', 'debit', 'nigeria'))
+console.log(generateValidCard.brandTypeAndCountry('mastercard', 'debit'))
 
 
 const port = process.env.PORT || 3001;
