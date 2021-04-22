@@ -1,12 +1,18 @@
 {
   "name": "getrandomcards",
-  "version": "1.0.2",
-  "description": "A package which generates valid credit cards",
+  "version": "1.0.3",
+  "description": "A package which generates valid credit and debit cards.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js"
   },
+  "keywords": [
+    "credit card",
+    "debit card",
+    "javascript",
+    "node"
+  ],
   "author": "Valentine Aguoru",
   "license": "ISC",
   "devDependencies": {
