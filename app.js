@@ -85,7 +85,7 @@ generateValidCard.endwith = (input) => {
         }
         
         if (endNum.toString().split('').length < 10 || endNum.toString().split('').length > 10) {
-            throw new Error('Start number should not be less or more than 10 digits')
+            throw new Error('End number should not be less or more than 10 digits')
         }
 
         cardDetails = db[Math.floor(Math.random() * db.length)];
