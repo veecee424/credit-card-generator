@@ -9,13 +9,15 @@ generateValidCard.params = (input)=> {
     return fetchCC(input)
 } 
 
-generateValidCard.randomCard = (input) => {
+generateValidCard.randomcard = (input) => {
     if (!input) {
         return fetchCC()
+    } else if (input) {
+        return {status: 'error', message: 'No parameter required - allow me to do my thing.'}
     }
 }
 
-generateValidCard.startWith = (start) => {
+generateValidCard.startwith = (start) => {
     let cardNumberArray = []
     let startNum = null
     let remainingDigits = null
@@ -69,7 +71,7 @@ generateValidCard.startWith = (start) => {
 }
 
 
-generateValidCard.endWith = (input) => {
+generateValidCard.endwith = (input) => {
     let cardNumberArray = []
     let endNum = input
     let BIN = null;
@@ -88,43 +90,44 @@ generateValidCard.endWith = (input) => {
 
         cardDetails = db[Math.floor(Math.random() * db.length)];
         BIN = cardDetails.BIN;
-        providedCheckDigit = endNum[9]
+        providedCheckDigit = endNum.toString().split('')[9]
         cardNumberArray = BIN.toString().split('').concat(endNum.toString().split('').slice(0, 9))
-        cardNumber = cardNumberArray.join('')
-        
-        
+        cardNumberArray[1] = 0;
+        cardNumber = cardNumberArray.join('');
+
         for (let i = cardNumberArray.length - 1; i >= 0; i-=2) {
             cardNumberArray[i] *= 2
             if (cardNumberArray[i] > 9) {
                 cardNumberArray[i] -= 9
             }
         }
-    
+      
         // Loop through account number and convert to array
         let checkSum = cardNumberArray.map((value)=> {
             return parseInt(value)
         }).reduce((total, nextValue)=> {
             return total+nextValue;
         }, 0)
-       
-        let checkDigit = 0;
-        if ((checkSum + providedCheckDigit) % 10 === 0) {
-            checkDigit = providedCheckDigit;
-        } else {
-            let i = 0;
-            for (i; (checkSum+i)%10 !== 0; i++) {
-                checkDigit = i+1
-            }
-        }
-        return {status: "Success", card_number: cardNumber+checkDigit}
+        
+
+        let checkDigit = Number(providedCheckDigit);
+        let remainder = 0;
+        if ((checkSum + checkDigit) % 10 !== 0) {
+           remainder = (checkSum + checkDigit) % 10;
+           cardNumber[1] = 10 - remainder
+        } 
+    
+        let card_num = cardNumber.split('')
+        card_num[1] = 10- remainder;
+        return {status: "Success", card_number: card_num.join('')+checkDigit}
     } catch (e) {
         return {status: "Error", "message": e.message}
     }
 }
-// console.log(generateValidCard.endWith(4629486294))
+// console.log(generateValidCard.endWith(4629486243))
 // console.log(generateValidCard.startWith(220001000))
-// console.log(generateValidCard.randomCard())
-// console.log(generateValidCard.params({country: 'wrong country', brand: 'american express', type: "credit"}))
+// console.log(generateValidCard.randomcard(8))
+// console.log(generateValidCard.params({country: 'brazil', brand: 'american express', type: "credit"}))
 
 // const port = process.env.PORT || 3001;
 // app.listen(port, ()=> {

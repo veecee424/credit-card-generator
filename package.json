@@ -1,6 +1,6 @@
 {
   "name": "getrandomcards",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A package which generates valid credit and debit cards.",
   "main": "app.js",
   "scripts": {
