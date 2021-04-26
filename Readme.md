@@ -22,17 +22,17 @@ Examples
 const card = require('getrandomcards')`
 ```
 ```
-card.randomCard() //Output { status: 'Success', card_number: '4892409075582441', brand: 'VISA', type: 'CREDIT', country: 'United States' }
+card.randomcard() //Output { status: 'Success', card_number: '4892409075582441', brand: 'VISA', type: 'CREDIT', country: 'United States' }
 **The randomcard() method requires no parameter and automatically generates random cards once called.**
 ```
 
 ```
-card.startWith(2200010000) //Output { status: 'Success', card_number: '2200010000679475' }
+card.startcith(2200010000) //Output { status: 'Success', card_number: '2200010000679475' }
 **startwith() takes in a single parameter which should be a number not less or more than 10 digits.**
 ```
 
 ```
-card.endWith(3126765890) //Output { status: 'Success', card_number: '3713143126765890' }
+card.endwith(3126765890) //Output { status: 'Success', card_number: '3713143126765890' }
 **endwith() also takes a single parameter which is a valid 10 digit number**
 ```
 
